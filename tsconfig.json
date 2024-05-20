@@ -37,6 +37,6 @@
     "**/*.cjs",
     "**/*.js",
     ".next/types/**/*.ts"
-  ],
+, "src/components/common/Button"  ],
   "exclude": ["node_modules"]
 }

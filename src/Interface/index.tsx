@@ -1,5 +1,5 @@
 export interface Button {
-    btnClass: string, 
+    btnClass?: string, 
     btnText: string,
     onClick: () => void,
 }
