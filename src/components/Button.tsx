@@ -1,7 +1,7 @@
 import { type Button } from "@/Interface"
  
-export default function Button({btnClass, btnText} : Button) {
+export default function Button({btnClass, btnText, onClick} : Button) {
     return (
-        <button className={`btn ${btnClass}`} >{btnText}</button>
+        <button onClick={onClick} className={`btn ${btnClass}`} >{btnText}</button>
     )
 }

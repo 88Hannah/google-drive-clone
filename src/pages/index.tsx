@@ -1,7 +1,11 @@
 import Head from "next/head";
 import Button from "@/components/Button"
+import { useSession, signIn, signOut } from "next-auth/react"
+
 
 export default function Home() {
+  const { data: session } = useSession()
+  console.log(session)
   return (
     <>
       <Head>
@@ -14,7 +18,13 @@ export default function Home() {
           <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
             Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
           </h1>
-          <Button btnClass="btn-primary" btnText="Sign in"/>
+          {session ? 
+            <div className="flex flex-col items-center">
+              <h2 className="text-4xl text-white">Welcome {session.user.name}</h2>
+              <Button onClick={() => signOut()} btnClass="btn-secondary" btnText="Sign out"></Button>
+            </div>
+            : <Button onClick={() => signIn()} btnClass="btn-secondary" btnText="Sign in"></Button>
+          }
         </div>
       </main>
     </>
