@@ -1,6 +1,7 @@
 import React from "react"
 import styles from "./UploadFiles.module.scss"
 import Button from "../common/Button"
+import { fileUpload } from "@/API/FileUpload"
 
 export default function UploadFiles() {
     const [ addFile, setAddFile ] = React.useState(false)
@@ -10,7 +11,11 @@ export default function UploadFiles() {
     }
 
     const handleFileChange = (event: React.FormEvent<HTMLInputElement>) => {
-        console.log(event.currentTarget.files?.[0])
+        if(event.currentTarget.files) {
+            const file = event.currentTarget.files[0]
+            console.log(file)
+            fileUpload(file)
+        }
     }
 
     return (
