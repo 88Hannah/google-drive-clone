@@ -1,10 +1,12 @@
 import React from "react"
 import styles from "./UploadFiles.module.scss"
 import Button from "../common/Button"
+import Progress from "../common/Progress"
 import { fileUpload } from "@/API/FileUpload"
 
 export default function UploadFiles() {
     const [ addFile, setAddFile ] = React.useState(false)
+    const [ progress, setProgress ] = React.useState(0)
 
     const handleAddFileClick = () => {
         setAddFile(prevAddFile => !prevAddFile)
@@ -14,7 +16,7 @@ export default function UploadFiles() {
         if(event.currentTarget.files) {
             const file = event.currentTarget.files[0]
             console.log(file)
-            fileUpload(file)
+            fileUpload(file, setProgress)
         }
     }
 
@@ -39,6 +41,10 @@ export default function UploadFiles() {
                 btnClass="btn-success"
                 onClick={() => console.log("Clicked")}
             />
+            {
+                progress == 0 || progress == 100 ? null
+                : <Progress progress={progress}/>
+            }
         </div>
     )
 }

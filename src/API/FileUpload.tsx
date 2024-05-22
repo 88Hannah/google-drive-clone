@@ -2,7 +2,7 @@ import { storage } from "@/firebaseConfig"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { addToFireStoreDatabase } from "./Firestore"
 
-export const fileUpload = (file) => {
+export const fileUpload = (file, setProgress: (progress: number) => void) => {
     // Create the file metadata
     /** @type {any} */
     const metadata = {
@@ -18,7 +18,8 @@ export const fileUpload = (file) => {
       (snapshot) => {
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
+        console.log(progress)
+        setProgress(progress)
         switch (snapshot.state) {
           case 'paused':
             console.log('Upload is paused');
