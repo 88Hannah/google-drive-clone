@@ -1,5 +1,6 @@
 import { storage } from "@/firebaseConfig"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { addToFireStoreDatabase } from "./Firestore"
 
 export const fileUpload = (file) => {
     // Create the file metadata
@@ -35,7 +36,7 @@ export const fileUpload = (file) => {
       () => {
         // Upload completed successfully, now we can get the download URL
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log('File available at', downloadURL);
+          addToFireStoreDatabase(downloadURL)
         });
       }
     );
