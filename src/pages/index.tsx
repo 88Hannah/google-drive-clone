@@ -1,6 +1,7 @@
 import Head from "next/head";
 import TopBar from "@/components/Topbar"
 import UploadFiles from "@/components/UploadFiles";
+import ShowFiles from "@/components/ShowFiles";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <main className="min-h-screen">
         <TopBar />
         <UploadFiles />
+        <ShowFiles />
       </main>
     </>
   );

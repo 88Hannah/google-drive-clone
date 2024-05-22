@@ -16,7 +16,9 @@ export default function UploadFiles() {
         if(event.currentTarget.files) {
             const file = event.currentTarget.files[0]
             console.log(file)
-            fileUpload(file, setProgress)
+            if(file) {
+                fileUpload(file, setProgress)
+            }
         }
     }
 

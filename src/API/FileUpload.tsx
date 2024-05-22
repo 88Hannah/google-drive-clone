@@ -3,14 +3,17 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { addToFireStoreDatabase } from "./Firestore"
 
 export const fileUpload = (file, setProgress: (progress: number) => void) => {
+    const fileName: string = file.name
+    const fileType: string = file.type ?? "unknown"
+
     // Create the file metadata
     /** @type {any} */
     const metadata = {
-      contentType: file.type != "" ? file.type : "unknown"
+      contentType: fileType
     };
 
     // Upload file and metadata to the object
-    const storageRef = ref(storage, `files/${file.name}`);
+    const storageRef = ref(storage, `files/${fileName}`);
     const uploadTask = uploadBytesResumable(storageRef, file, metadata);
     
     // Listen for state changes, errors, and completion of the upload.
@@ -37,7 +40,7 @@ export const fileUpload = (file, setProgress: (progress: number) => void) => {
       () => {
         // Upload completed successfully, now we can get the download URL
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          addToFireStoreDatabase(downloadURL)
+          addToFireStoreDatabase(downloadURL, fileName, fileType)
         });
       }
     );
