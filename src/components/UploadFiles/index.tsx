@@ -26,7 +26,7 @@ export default function UploadFiles() {
         <div className={styles.uploadMain}>
             <Button 
                 btnText="Add a file"
-                btnClass="btn-success"
+                btnClass="btn-primary"
                 onClick={handleAddFileClick}
             />
             { 
@@ -40,7 +40,7 @@ export default function UploadFiles() {
             }
             <Button 
                 btnText="Create a folder"
-                btnClass="btn-success"
+                btnClass="btn-primary"
                 onClick={() => console.log("Clicked")}
             />
             {

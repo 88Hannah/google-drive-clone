@@ -7,20 +7,32 @@
 .filePreview {
     width: 200px;
     height: 200px;
+    padding: 10px;
+    display: flex;
 }
 
-.filePreviewImg {
-    object-fit: cover;
-    width: 90%;
-}
-
-.filePreviewDefault {
-    width: 100%;
-    height: 100%;
-    background-color: grey;
+.previewContent {
+    max-height: 100%;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
     justify-content: center;
     align-items: center;
+}
+
+.imgContainer {
+    flex-shrink: 1;
+    width: auto
+}
+.filePreviewImg {
+    height: 100%;
+    width: 100%;
+}
+
+.fileName {
+    max-width: 90%;
+    word-break: break-all;
+    text-align: center;
+    overflow: hidden;
 }

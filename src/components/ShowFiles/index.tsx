@@ -7,18 +7,27 @@ export default function ShowFiles() {
     const files = useFiles()
     console.log(files)
 
-    const displayFiles = files.map(file => {
+    const displayFiles = files.map((
+        file: {
+            fileUrl: string;
+            fileType: string;
+            fileName: string
+        }) => {
         return (
-            <div key={file.fileUrl} className={styles.filePreview}>
-                <div className={styles.filePreviewDefault}>
+
+            <a key={file.fileUrl} className={`${styles.filePreview} bg-neutral`} href={file.fileUrl} target="_blank">
+                <div className={styles.previewContent}>
                     {
                         (file.fileType == "image/jpeg" || file.fileType == "image/png") ?
-                        <img src={file.fileUrl} className={styles.filePreviewImg}/> 
+                        <div className={styles.imgContainer}>
+                            <img src={file.fileUrl} className={styles.filePreviewImg} alt={file.fileName}/>
+                        </div> 
                         : <FaFile size="2em" />
                     }
-                    <p>{file.fileName}</p>
-                </div> 
-            </div>
+                    <p className={styles.fileName}>{file.fileName}</p>
+                </div>
+            </a> 
+           
         )
     })
 
