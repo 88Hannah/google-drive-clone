@@ -2,18 +2,18 @@ import { storage } from "@/firebaseConfig"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { addToFireStoreDatabase } from "./Firestore"
 
-export const fileUpload = (file, setProgress: (progress: number) => void) => {
-    const fileName: string = file.name
-    const fileType: string = file.type ?? "unknown"
+export const fileUpload = (file, userEmail, setProgress: (progress: number) => void) => {
 
     // Create the file metadata
     /** @type {any} */
     const metadata = {
-      contentType: fileType
+      contentType: file.type
     };
 
+    const parentId = "abcdef"
+
     // Upload file and metadata to the object
-    const storageRef = ref(storage, `files/${fileName}`);
+    const storageRef = ref(storage, `files/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file, metadata);
     
     // Listen for state changes, errors, and completion of the upload.
@@ -21,7 +21,6 @@ export const fileUpload = (file, setProgress: (progress: number) => void) => {
       (snapshot) => {
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(progress)
         setProgress(progress)
         switch (snapshot.state) {
           case 'paused':
@@ -40,7 +39,7 @@ export const fileUpload = (file, setProgress: (progress: number) => void) => {
       () => {
         // Upload completed successfully, now we can get the download URL
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          addToFireStoreDatabase(downloadURL, fileName, fileType)
+          addToFireStoreDatabase(downloadURL, file, userEmail, parentId)
         });
       }
     );

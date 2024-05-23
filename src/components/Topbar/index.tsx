@@ -1,18 +1,22 @@
 import Button from "@/components/common/Button"
 import { signIn, signOut } from "next-auth/react"
+import Image from "next/image"
 import { useFetchSession } from "@/hooks/useSession"
 import styles from "./Topbar.module.scss"
 
 export default function HomeComponent() {
     const { session } = useFetchSession()
+    console.log(session)
     return (
         <div className={styles.authBtn}>
             {session ? 
             <div className="flex flex-col items-center">
-              <img
+              <Image
                 onClick={() => signOut()}
                 className={styles.profileImg}
-                src={session?.user.image!}
+                src={session?.user.image ?? ""}
+                width={100}
+                height={100}
                 alt="Profile image"
               />
               {/* It feels like it would be good to have a more obvious way to sign out ... */}

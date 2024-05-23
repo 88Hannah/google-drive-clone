@@ -3,7 +3,6 @@ import { useFiles } from "@/hooks/useFiles"
 import { FaFile } from "react-icons/fa6";
 
 export default function ShowFiles() {
-    console.log("Fetching files ...")
     const files = useFiles()
     console.log(files)
 
@@ -30,8 +29,6 @@ export default function ShowFiles() {
            
         )
     })
-
-    console.log(displayFiles)
 
     return (
         <div className={styles.filesContainer}>

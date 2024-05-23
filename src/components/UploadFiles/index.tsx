@@ -3,24 +3,41 @@ import styles from "./UploadFiles.module.scss"
 import Button from "../common/Button"
 import Progress from "../common/Progress"
 import { fileUpload } from "@/API/FileUpload"
+import { useFetchSession } from "@/hooks/useSession"
 
 export default function UploadFiles() {
     const [ addFile, setAddFile ] = React.useState(false)
+    const [ addFolder, setAddFolder ] = React.useState(false)
     const [ progress, setProgress ] = React.useState(0)
+    const [ folderName, setFolderName ] = React.useState("")
+    
+    const { session } = useFetchSession()
+    const userEmail = session?.user.email
 
     const handleAddFileClick = () => {
         setAddFile(prevAddFile => !prevAddFile)
     }
-
+    
     const handleFileChange = (event: React.FormEvent<HTMLInputElement>) => {
         if(event.currentTarget.files) {
             const file = event.currentTarget.files[0]
-            console.log(file)
             if(file) {
-                fileUpload(file, setProgress)
+                fileUpload(file, userEmail, setProgress)
             }
         }
     }
+    
+    const handleAddFolderClick = () => {
+        setAddFolder(prevAddFolder => !prevAddFolder)
+    }
+
+    const handleCreateFolder = () => {
+        console.log("Folder name: " + folderName)
+    }
+
+
+
+
 
     return (
         <div className={styles.uploadMain}>
@@ -39,10 +56,27 @@ export default function UploadFiles() {
                 />
             }
             <Button 
-                btnText="Create a folder"
+                btnText="Add a folder"
                 btnClass="btn-primary"
-                onClick={() => console.log("Clicked")}
+                onClick={handleAddFolderClick}
             />
+            {
+                addFolder
+                &&
+                <>
+                    <input 
+                        type="text" 
+                        placeholder="Folder name"
+                        value={folderName}
+                        onChange={event => setFolderName(event.target.value)}
+                        className="input input-bordered input-secondary w-full max-w-xs" />
+                    <Button 
+                        btnText="Create"
+                        btnClass="btn-secondary"
+                        onClick={handleCreateFolder}
+                    />
+                </>
+            }
             {
                 progress == 0 || progress == 100 ? null
                 : <Progress progress={progress}/>
