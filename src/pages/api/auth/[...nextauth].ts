@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github"
+import GoogleProvider from "next-auth/providers/google";
 import { type AuthInteface } from "@/Interface"
 
 // the below was the initial set up of the file
@@ -10,10 +11,14 @@ import { type AuthInteface } from "@/Interface"
 export const authOptions = {
   // Configure one or more authentication providers
   providers: [
-    GithubProvider(({
+    GithubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
-    } as AuthInteface)),
+    } as AuthInteface),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+    } as AuthInteface)
     // ...add more providers here
   ],
 }
