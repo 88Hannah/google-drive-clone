@@ -1,13 +1,13 @@
 import React from "react"
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { database } from "@/firebaseConfig"
 
-export function useFiles() {
+export function useFiles(parentId: string) {
     const [ fileList, setFileList ] = React.useState([])
     
     React.useEffect(() => {
-        const files = collection(database, "files");
-        const unsubscribe = onSnapshot(files, (snapshot) => {
+        const relevantFiles = query(collection(database, "files"), where("parentId", "==", parentId ?? ""));
+        const unsubscribe = onSnapshot(relevantFiles, (snapshot) => {
             const currentFiles = snapshot.docs.map(file => {
                 return { ... file.data(), id: file.id }
             })

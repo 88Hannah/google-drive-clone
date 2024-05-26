@@ -1,16 +1,14 @@
 import { storage } from "@/firebaseConfig"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { addToFireStoreDatabase } from "./Firestore"
+import { addToFireStoreDatabase } from "./Firestore";
 
-export const fileUpload = (file, userEmail, setProgress: (progress: number) => void) => {
+export const fileUpload = (file, userEmail, parentId, setProgress: (progress: number) => void) => {
 
     // Create the file metadata
     /** @type {any} */
     const metadata = {
       contentType: file.type
     };
-
-    const parentId = "abcdef"
 
     // Upload file and metadata to the object
     const storageRef = ref(storage, `files/${file.name}`);

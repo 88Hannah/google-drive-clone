@@ -3,7 +3,9 @@ import styles from "./UploadFiles.module.scss"
 import Button from "../common/Button"
 import Progress from "../common/Progress"
 import { fileUpload } from "@/API/FileUpload"
+import { addFolderToDatabase } from "@/API/Firestore"
 import { useFetchSession } from "@/hooks/useSession"
+import { useRouter } from "next/router";
 
 export default function UploadFiles() {
     const [ addFile, setAddFile ] = React.useState(false)
@@ -14,6 +16,9 @@ export default function UploadFiles() {
     const { session } = useFetchSession()
     const userEmail = session?.user.email
 
+    const router = useRouter();
+    const parentId = router.query.id ?? ""
+
     const handleAddFileClick = () => {
         setAddFile(prevAddFile => !prevAddFile)
     }
@@ -22,7 +27,7 @@ export default function UploadFiles() {
         if(event.currentTarget.files) {
             const file = event.currentTarget.files[0]
             if(file) {
-                fileUpload(file, userEmail, setProgress)
+                fileUpload(file, userEmail, parentId, setProgress)
             }
         }
     }
@@ -32,7 +37,7 @@ export default function UploadFiles() {
     }
 
     const handleCreateFolder = () => {
-        console.log("Folder name: " + folderName)
+        addFolderToDatabase(folderName, userEmail, parentId)
     }
 
 
