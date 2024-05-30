@@ -22,8 +22,6 @@ export default function UploadFiles() {
     const parentFolderName = router.query.name ? router.query.name : "My Documents"
 
     const { breadcrumb: parentBreadcrumb } = useFolderInfo(parentId)
-    console.log("Folder breadcrumb: ")
-    console.log(parentBreadcrumb)
 
     const breadcrumb = [
         ...parentBreadcrumb,

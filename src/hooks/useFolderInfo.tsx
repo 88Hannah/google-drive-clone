@@ -5,7 +5,7 @@ import React from "react";
 const files = collection(database, "files");
 
 export const useFolderInfo = (folderId: string) => {
-  const [ breadcrumb, setBreadcrumb ] = React.useState("");
+  const [ breadcrumb, setBreadcrumb ] = React.useState([]);
 
   const getBreadcrumb = () => {
     if (folderId) {

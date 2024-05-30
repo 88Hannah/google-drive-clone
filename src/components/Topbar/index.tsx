@@ -6,7 +6,6 @@ import styles from "./Topbar.module.scss"
 
 export default function HomeComponent() {
     const { session } = useFetchSession()
-    console.log(session)
     return (
         <div className={styles.authBtn}>
             {session ? 
