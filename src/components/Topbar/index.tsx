@@ -11,7 +11,7 @@ export default function HomeComponent() {
             {session ? 
             <div className="flex flex-col items-center">
               <Image
-                onClick={() => signOut()}
+                onClick={() => signOut({ callbackUrl: '/', redirect:true })}
                 className={styles.profileImg}
                 src={session?.user.image ?? ""}
                 width={100}

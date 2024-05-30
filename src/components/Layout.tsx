@@ -1,8 +1,10 @@
 import Head from "next/head";
 import TopBar from "@/components/Topbar"
 import UploadFiles from "@/components/UploadFiles";
+import { useFetchSession } from "@/hooks/useSession"
 
 export default function Layout({ children }) {
+    const { session } = useFetchSession()
     return (
         <>
         <Head>
@@ -12,8 +14,14 @@ export default function Layout({ children }) {
         </Head>
         <main className="min-h-screen" data-theme="dim">
             <TopBar />
-            <UploadFiles />
-            { children }
+            { 
+                session ? 
+                <>
+                    <UploadFiles />
+                    { children }
+                </>
+                : null
+            }
         </main>
         </>
 
