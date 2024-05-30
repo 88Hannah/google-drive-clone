@@ -4,13 +4,13 @@ import { FaFile, FaFolder } from "react-icons/fa6";
 import { useRouter } from 'next/router'
 
 export default function ShowFiles({id}: {id: string}) {
-    const files = useFiles(id)
-    console.log(files)
 
+    const files = (useFiles(id))
+    
     const router = useRouter()
 
-    const handleFolderClick = (folderId: string) => {
-        router.push(`/folder?id=${folderId}`)
+    const handleFolderClick = (folderId: string, folderName: string) => {
+        router.push(`/folder?id=${folderId}&name=${folderName}`)
     }
 
     const displayFiles = files.map((
@@ -23,7 +23,7 @@ export default function ShowFiles({id}: {id: string}) {
         }) => {
         return (
             file.isFolder ? 
-                <div key={file.fileUrl} className={`${styles.filePreview} bg-neutral`} onClick={() => handleFolderClick(file.id)}>
+                <div key={file.fileUrl} className={`${styles.filePreview} bg-neutral`} onClick={() => handleFolderClick(file.id, file.folderName)}>
                     <div className={styles.previewContent}>
                         <FaFolder size="2em" />
                         <p className={styles.fileName}>{file.folderName}</p>

@@ -6,6 +6,7 @@ import { fileUpload } from "@/API/FileUpload"
 import { addFolderToDatabase } from "@/API/Firestore"
 import { useFetchSession } from "@/hooks/useSession"
 import { useRouter } from "next/router";
+import { useFolderInfo } from "@/hooks/useFolderInfo"
 
 export default function UploadFiles() {
     const [ addFile, setAddFile ] = React.useState(false)
@@ -17,7 +18,21 @@ export default function UploadFiles() {
     const userEmail = session?.user.email
 
     const router = useRouter();
-    const parentId = router.query.id ?? ""
+    const parentId = router.query.id ? router.query.id : ""
+    const parentFolderName = router.query.name ? router.query.name : "My Documents"
+
+    const { breadcrumb: parentBreadcrumb } = useFolderInfo(parentId)
+    console.log("Folder breadcrumb: ")
+    console.log(parentBreadcrumb)
+
+    const breadcrumb = [
+        ...parentBreadcrumb,
+        {   
+            folderName: parentFolderName,
+            folderId: parentId
+        } 
+    ]
+
 
     const handleAddFileClick = () => {
         setAddFile(prevAddFile => !prevAddFile)
@@ -27,7 +42,7 @@ export default function UploadFiles() {
         if(event.currentTarget.files) {
             const file = event.currentTarget.files[0]
             if(file) {
-                fileUpload(file, userEmail, parentId, setProgress)
+                fileUpload(file, userEmail, parentId, breadcrumb, parentFolderName, setProgress)
             }
         }
     }
@@ -37,7 +52,7 @@ export default function UploadFiles() {
     }
 
     const handleCreateFolder = () => {
-        addFolderToDatabase(folderName, userEmail, parentId)
+        addFolderToDatabase(folderName, userEmail, parentId, breadcrumb, parentFolderName)
     }
 
 

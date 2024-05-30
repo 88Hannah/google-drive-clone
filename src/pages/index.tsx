@@ -1,4 +1,4 @@
-import Folder from "@/pages/[Folder]"
+import Folder from "@/pages/[...Folder]"
 
 export default function Home() {
   return (

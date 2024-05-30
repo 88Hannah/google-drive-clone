@@ -2,7 +2,7 @@ import { storage } from "@/firebaseConfig"
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { addToFireStoreDatabase } from "./Firestore";
 
-export const fileUpload = (file, userEmail, parentId, setProgress: (progress: number) => void) => {
+export const fileUpload = (file, userEmail, parentId, breadcrumb, parentFolder, setProgress: (progress: number) => void) => {
 
     // Create the file metadata
     /** @type {any} */
@@ -37,7 +37,7 @@ export const fileUpload = (file, userEmail, parentId, setProgress: (progress: nu
       () => {
         // Upload completed successfully, now we can get the download URL
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          addToFireStoreDatabase(downloadURL, file, userEmail, parentId)
+          addToFireStoreDatabase(downloadURL, file, userEmail, parentId, breadcrumb, parentFolder)
         });
       }
     );
