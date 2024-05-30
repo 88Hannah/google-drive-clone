@@ -1,0 +1,20 @@
+.breadcrumbContainer {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+}
+
+.breadcrumbLink {
+    display: inline-block;
+    font-size: 1.2rem;
+}
+
+.breadcrumbLink:hover {
+    color: oklch(var(--p));
+}
+
+.breadcrumbArrow {
+    display: inline-block;
+    font-size: 1.2rem;
+    margin-left: 10px;
+    margin-right: 10px;
+}

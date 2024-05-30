@@ -34,6 +34,7 @@ export default function UploadFiles() {
 
     const handleAddFileClick = () => {
         setAddFile(prevAddFile => !prevAddFile)
+        setAddFolder(false)
     }
     
     const handleFileChange = (event: React.FormEvent<HTMLInputElement>) => {
@@ -47,6 +48,8 @@ export default function UploadFiles() {
     
     const handleAddFolderClick = () => {
         setAddFolder(prevAddFolder => !prevAddFolder)
+        setAddFile(false)
+        setFolderName("")
     }
 
     const handleCreateFolder = () => {
@@ -61,7 +64,7 @@ export default function UploadFiles() {
         <div className={styles.uploadMain}>
             <Button 
                 btnText="Add a file"
-                btnClass="btn-primary"
+                btnClass={`btn-primary ${styles.addFileButton}`}
                 onClick={handleAddFileClick}
             />
             { 
@@ -75,7 +78,7 @@ export default function UploadFiles() {
             }
             <Button 
                 btnText="Add a folder"
-                btnClass="btn-primary"
+                btnClass={`btn-primary ${styles.addFolderButton}`}
                 onClick={handleAddFolderClick}
             />
             {
@@ -90,7 +93,7 @@ export default function UploadFiles() {
                         className="input input-bordered input-secondary w-full max-w-xs" />
                     <Button 
                         btnText="Create"
-                        btnClass="btn-secondary"
+                        btnClass={`btn-secondary ${styles.createFolderButton}`}
                         onClick={handleCreateFolder}
                     />
                 </>

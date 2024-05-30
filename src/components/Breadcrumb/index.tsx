@@ -19,13 +19,16 @@ export default function Breadcrumb({folderId, folderName}) {
   
     const breadcrumbElement = currentBreadcrumb.map((crumb, index) => {
       if (index == 0) {
-        return <a key={crumb.folderId} href={`/folder?id=${crumb.folderId}&name=${crumb.folderName}`}>{crumb.folderName}</a>
+        return <a key={crumb.folderId} href={`/folder?id=${crumb.folderId}&name=${crumb.folderName}`} className={styles.breadcrumbLink}>{crumb.folderName}</a>
       }
       else {
-        return <a key={crumb.folderId} href={`/folder?id=${crumb.folderId}&name=${crumb.folderName}`}><FaAngleRight />{crumb.folderName}</a>
+        return <><FaAngleRight className={styles.breadcrumbArrow}/><a key={crumb.folderId} href={`/folder?id=${crumb.folderId}&name=${crumb.folderName}`} className={styles.breadcrumbLink}>{crumb.folderName}</a></>
       }
     })
     
-    return breadcrumbElement
-
+    return (
+        <div className={styles.breadcrumbContainer}>
+            {breadcrumbElement}
+        </div>
+    )
   }
